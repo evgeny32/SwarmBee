@@ -20,7 +20,9 @@ then
     echo ""
     echo -e "${COLOR_GREEN}🐝${COLOR_NC} Bee node is running"
     echo -n "Peers now: "; curl -s http://localhost:1635/peers | jq '.peers | length'
-    echo -n "Disc space:"; df -h | grep /dev/vda
+    echo -n "Disc space:";
+    df -h -t ext4
+    echo ""
 else
     echo -e "${COLOR_RED}🐝${COLOR_NC} Bee node is NOT RUNNING!"
 fi
