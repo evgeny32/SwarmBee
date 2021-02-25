@@ -7,7 +7,7 @@ export COLOR_RED='\e[0;31m'
 bold=$(tput bold)
 normal=$(tput sgr0)
 echo ""
-echo -n "Bee version " ; bee version
+echo "Bee version " ; bee version
 echo ""
 if pgrep -x "bee" > /dev/null
 then
@@ -19,12 +19,12 @@ then
     echo "https://goerli.etherscan.io/address/$cba"
     echo ""
     echo -e "${COLOR_GREEN}🐝${COLOR_NC} Bee node is running"
-    echo -n "Peers now: "; curl -s http://localhost:1635/peers | jq '.peers | length'
-    echo ""
-    echo -n "Cashout info:"
+    echo -e "Peers now: "; curl -s http://localhost:1635/peers | jq '.peers | length'
+
+    echo -e "Cashout info:"
     ls -ahl | grep cash.log
     echo ""
-    echo -n "Disc space:";
+    echo -e "Disc space:";
     df -h -t ext4
     echo ""
 else
