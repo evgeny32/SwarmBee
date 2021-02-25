@@ -36,38 +36,3 @@ else
       exit 0
     fi
 fi
-
-echo ""
-PS3='Please enter your choice:'
-options=("Balance" "Manual cashout" "chequebook --gBzz--> node" "chequebook <--gBzz-- node" "Restart node" "Quit")
-select opt in "${options[@]}"
-do
-    case $opt in
-        "Balance")
-            echo "Balance of chequebook:"
-            curl -s localhost:1635/chequebook/balance
-            ;;
-        "Manual cashout")
-            echo "Manual cashout (./cashout.sh cashout-all >> /root/cash.log)..."
-            ~/cashout.sh cashout-all >> /root/cash.log
-            ;;
-        "chequebook --gBzz--> node")
-            echo "Move gBzz from cheque book to address of node..."
-            thash=$(curl -XPOST -s localhost:1635/chequebook/withdraw\?amount\=1000 | jq .transactionHash | tr -d '"')
-            echo "  Etherscan https://goerli.etherscan.io/tx/$thash"
-            ;;
-        "chequebook <--gBzz-- node")
-            echo "Move gBzz from node's address to cheque book..."
-            thash=$(curl -XPOST -s localhost:1635/chequebook/deposit\?amount\=1000 | jq .transactionHash |  tr -d '"')
-            echo "  Etherscan https://goerli.etherscan.io/tx/$thash"
-            ;;
-        "Restart node")
-            echo "Restarting node (systemctl restart bee)..."
-            systemctl restart bee
-            ;;
-        "Quit")
-            break
-            ;;
-        *) echo "invalid option $REPLY";;
-    esac
-done
