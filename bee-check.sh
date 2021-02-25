@@ -20,6 +20,10 @@ then
     echo ""
     echo -e "${COLOR_GREEN}🐝${COLOR_NC} Bee node is running"
     echo -n "Peers now: "; curl -s http://localhost:1635/peers | jq '.peers | length'
+    echo ""
+    echo -n "Cashout info:"
+    ls -ahl | grep cash.log
+    echo ""
     echo -n "Disc space:";
     df -h -t ext4
     echo ""
